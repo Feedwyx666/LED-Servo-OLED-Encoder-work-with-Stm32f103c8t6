@@ -1,0 +1,47 @@
+# ---------- Keil MDK 编译产物（可重新编译生成，不纳入版本控制） ----------
+Objects/
+Listings/
+*.o
+*.obj
+*.d
+*.crf
+*.dep
+*.axf
+*.hex
+*.bin
+*.elf
+*.lst
+*.map
+*.sct
+*.lnp
+*.htm
+*.plg
+*.tra
+*.iex
+*.__i
+*.bak
+*.tmp
+*.rpt
+*.omf
+*.ddk
+*.edk
+*.mpf
+*.mpj
+
+# ---------- Keil 调试器/界面的本机个人配置 ----------
+# .uvguix.* 是窗口布局，每台机器不同，无共享价值
+*.uvguix.*
+DebugConfig/
+JLinkLog.txt
+
+# 注意：*.uvoptx（调试器与断点设置）按需求保留提交，故不在此忽略
+# *.uvprojx（工程结构与编译选项）必须提交，否则 clone 后无法打开工程
+
+# ---------- 命令行编译/烧录日志 ----------
+build_log.txt
+flash_log.txt
+
+# ---------- 操作系统杂项 ----------
+Thumbs.db
+desktop.ini
+.DS_Store
