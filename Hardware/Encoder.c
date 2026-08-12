@@ -88,7 +88,7 @@ void EncoderEXTI_Init(void)
 
 int16_t Encoder_Count = 0;
 
-int GetEncoder_Count(void)
+int16_t GetEncoder_Count(void)
 {
 	
 	if (Encoder_Count>100)
