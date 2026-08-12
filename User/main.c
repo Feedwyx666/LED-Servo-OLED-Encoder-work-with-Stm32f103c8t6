@@ -44,19 +44,24 @@ int main(void)
 	while(1)
 	{
 //		LED_Off();
+		int16_t NowEncoder=GetEncoder_Count();
 		OLED_ShowNum(1,7,return_count(),5);
 		
 		OLED_ShowString(2,1,"LED");
-		OLED_ShowNum(2,4,GetEncoder_Count(),3);
+		OLED_ShowNum(2,4,NowEncoder,3);
 		OLED_ShowChar(2,7,'%');
 		
 		OLED_ShowString(3,1,"Servo");
-		OLED_ShowNum(3,6,GetEncoder_Count()*1.8,3);
+
+		// 先计算角度（强制用 float），再传给舵机和OLED
+		float ServoAngle = (float)NowEncoder * 1.8f;
+
+		OLED_ShowNum(3,6,ServoAngle,3);
 		OLED_ShowString(3,9,"Deg");
-		
-		
-		
-		TIM_SetCompare1(TIM2, GetEncoder_Count()*200);
-		Servo_SetAngel(GetEncoder_Count()*1.8);
+
+
+
+		TIM_SetCompare1(TIM2, NowEncoder*200);
+		Servo_SetAngle(ServoAngle);
 	}
 }
