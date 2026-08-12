@@ -1,6 +1,6 @@
 #ifndef __SERVO_H
 #define __SERVO_H
 
-void Servo_SetAngel(float Angel);
+void Servo_SetAngle(float Angle);
 
 #endif
