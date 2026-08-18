@@ -32,7 +32,7 @@ void EncoderEXTI_Init(void)
 	EXTI_Init(&EXTI_InitStruct);
 
 
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+	// NVIC_PriorityGroupConfig 已在 KeyEXTI_Init 中调用，此处删除避免重复配置
 
 	NVIC_InitTypeDef NVIC_InitStruct;
 	NVIC_InitStruct.NVIC_IRQChannel = EXTI0_IRQn;
@@ -71,7 +71,7 @@ void EncoderEXTI_Init(void)
 	EXTI_Init(&EXTI_InitStruct);
 
 
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+	// NVIC_PriorityGroupConfig 已在 KeyEXTI_Init 中调用，此处删除避免重复配置
 
 //	NVIC_InitTypeDef NVIC_InitStruct;
 	NVIC_InitStruct.NVIC_IRQChannel = EXTI3_IRQn;

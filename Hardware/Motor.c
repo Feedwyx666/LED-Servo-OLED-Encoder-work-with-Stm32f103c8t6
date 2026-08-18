@@ -30,7 +30,10 @@ void Motor_SetSpeed(int8_t Speed)
 		GPIO_ResetBits(GPIOA, GPIO_Pin_4);
 		TIM_SetCompare1(TIM3, -Speed); //PA6
 	}
-	
+	else
+	{
+		TIM_SetCompare1(TIM3, 0); //PA6
+	}
 	
 	
 	
