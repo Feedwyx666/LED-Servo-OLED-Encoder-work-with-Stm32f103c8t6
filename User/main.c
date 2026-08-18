@@ -68,5 +68,7 @@ int main(void)
 
 		TIM_SetCompare1(TIM2, NowEncoder*200);
 		Servo_SetAngle(ServoAngle);
+
+		Delay_ms(10);  // 降低主循环刷新频率，给编码器中断留出响应时间
 	}
 }
