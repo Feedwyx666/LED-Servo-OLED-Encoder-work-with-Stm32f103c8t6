@@ -6,7 +6,7 @@
 #include "Encoder.h"
 #include "PWM.h"
 #include "Servo.h"
-
+#include "Motor.h"
 
 /*
 实现旋转编码器调整PWM 驱动LED缓慢熄灭
@@ -37,7 +37,10 @@ int main(void)
 	KeyEXTI_Init();
 	EncoderEXTI_Init();
 	PWM_Init();
+	Motor_Init();
 	LED_Off();
+	
+	
 	
 	OLED_ShowString(1,1,"PWM");
 	OLED_ShowNum(1,7,0,5);
@@ -52,7 +55,9 @@ int main(void)
 		OLED_ShowChar(2,7,'%');
 		
 		OLED_ShowString(3,1,"Servo");
-
+		
+		Motor_SetSpeed(NowEncoder);
+		
 		// 先计算角度（强制用 float），再传给舵机和OLED
 		float ServoAngle = (float)NowEncoder * 1.8f;
 

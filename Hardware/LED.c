@@ -1,5 +1,4 @@
 #include "stm32f10x.h"
-#include "ClockInit.h"
 
 /**
   * @brief  初始化LED（PC13推挽输出，低电平点亮）

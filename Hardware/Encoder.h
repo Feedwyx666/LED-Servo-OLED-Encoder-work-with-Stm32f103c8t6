@@ -3,6 +3,7 @@
 
 int16_t GetEncoder_Count(void);
 void ResetEncoderCount(void);
+void CheckEncoderCount(void);
 void EncoderEXTI_Init(void);
 
 #endif

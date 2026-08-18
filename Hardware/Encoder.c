@@ -90,14 +90,19 @@ int16_t Encoder_Count = 0;
 
 int16_t GetEncoder_Count(void)
 {
-	
+	return Encoder_Count;
+}
+
+
+void CheckEncoderCount()
+{
 	if (Encoder_Count>100)
 		Encoder_Count = 100;
 	if (Encoder_Count<0)
 		Encoder_Count = 0;
-	
-	return Encoder_Count;
 }
+
+	
 
 void ResetEncoderCount(void)
 {
@@ -110,7 +115,7 @@ void EXTI0_IRQHandler(void)
 	{
 		if(GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_1)==0)
 			Encoder_Count--;
-		
+		CheckEncoderCount();
 		EXTI_ClearITPendingBit(EXTI_Line0);
 	}
 }
@@ -123,7 +128,7 @@ void EXTI1_IRQHandler(void)
 	{
 		if(GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_0)==0)
 			Encoder_Count++;
-		
+		CheckEncoderCount();
 		EXTI_ClearITPendingBit(EXTI_Line1);
 	}
 }

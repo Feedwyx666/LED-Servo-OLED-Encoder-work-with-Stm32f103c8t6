@@ -54,19 +54,8 @@ void PWM_Init(void)
 	
 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseInitStruct);
 	
-//	TIM_ClearFlag(TIM2,TIM_FLAG_Update);  //避免刚初始化完就进中断
-//	
-//	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
-//	
-//	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
-//	NVIC_InitTypeDef NVIC_InitStruct;
-//	NVIC_InitStruct.NVIC_IRQChannel = TIM2_IRQn;
-//	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
-//	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 1;
-//	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 1;
-//	NVIC_Init(&NVIC_InitStruct);
 	
-	//------------输出比较---------------
+	//------------输出比较 PWM ---------------
 	
 	TIM_OCInitTypeDef TIM_OCInitStruct;
 	
@@ -85,6 +74,8 @@ void PWM_Init(void)
 	*/
 	
 	TIM_OC1Init(TIM2, &TIM_OCInitStruct);
+	
+	TIM_OCInitStruct.TIM_Pulse = 500;  //CCR
 	TIM_OC2Init(TIM2, &TIM_OCInitStruct);
 	
 	
@@ -93,3 +84,56 @@ void PWM_Init(void)
 	
 }
 
+void PWM1_Init(void)
+{
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
+	
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);			//使能GPIO时钟
+	
+	GPIO_InitTypeDef GPIO_Initstructure;
+	GPIO_Initstructure.GPIO_Mode = GPIO_Mode_AF_PP;
+	GPIO_Initstructure.GPIO_Pin = GPIO_Pin_6;
+	GPIO_Initstructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOA, &GPIO_Initstructure);
+	
+	
+	TIM_InternalClockConfig(TIM3);
+	
+	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStruct;
+	
+	TIM_TimeBaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;
+	TIM_TimeBaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up;
+	TIM_TimeBaseInitStruct.TIM_Period = 100 - 1; 		//	ARR
+	TIM_TimeBaseInitStruct.TIM_Prescaler = 36 - 1;    //	PSC
+	TIM_TimeBaseInitStruct.TIM_RepetitionCounter = 0;
+	
+	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseInitStruct);
+	
+	
+	//------------输出比较 PWM ---------------
+	
+	TIM_OCInitTypeDef TIM_OCInitStruct;
+	
+	TIM_OCStructInit(&TIM_OCInitStruct);
+	
+	TIM_OCInitStruct.TIM_OCMode = TIM_OCMode_PWM1;
+	TIM_OCInitStruct.TIM_OCPolarity = TIM_OCPolarity_High;
+	TIM_OCInitStruct.TIM_OutputState = TIM_OutputState_Enable;
+	TIM_OCInitStruct.TIM_Pulse = 0;  //CCR
+	
+	/*
+	PWM频率 Freq=CK_PSC/(PSC+1)(ARR+1)
+	PWM占空比 Duty=CCR/(ARR+1)
+	PWM分辨率 Reso=1/(ARR+1)
+	1kHz Duty=50% Reso=1%  ==>  ARR=100 PSC=720 CCR=50
+	*/
+	
+	TIM_OC1Init(TIM3, &TIM_OCInitStruct);
+	
+	TIM_OCInitStruct.TIM_Pulse = 500;  //CCR
+	
+	
+	
+	TIM_Cmd(TIM3, ENABLE);
+	
+}

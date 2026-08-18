@@ -2,5 +2,6 @@
 #define __PWM_H
 
 void PWM_Init(void);
+void PWM1_Init(void);
 
 #endif
